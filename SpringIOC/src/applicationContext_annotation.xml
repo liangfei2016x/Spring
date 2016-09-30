@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:aop="http://www.springframework.org/schema/aop"
+             xmlns:tx="http://www.springframework.org/schema/tx"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 指定Spring IOC 容器扫描的包 -->
+	<!--resource-pattern="repository/*.class"  -->
+	<context:component-scan base-package="com.liang.spring.beans.annotation" >
+		<!-- 		
+		子节点表示要包含的的目标类 
+		type="annotation"  
+		type="assignable"  根据类名或者接口名 过滤
+		<context:include-filter type="annotation" expression=""/> 要在context:component-scan配置use-default-filters="false"
+		-->
+		<!-- 子节点表示排除在外的目标类 -->
+		<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/> -->
+	</context:component-scan>
+	
+
+	
+</beans>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:aop="http://www.springframework.org/schema/aop"
+             xmlns:tx="http://www.springframework.org/schema/tx"
+             xmlns:p="http://www.springframework.org/schema/p" 
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx.xsd">
+                     
+	<bean id="address" class="com.liang.spring.beans.autowire.Address" p:city="Beijin" p:street="changping"></bean>
+	<bean id="car" class="com.liang.spring.beans.autowire.Car" p:name="Audi" p:price="88888"></bean>
+	<!-- 传统方式 -->
+	<bean id="person" class="com.liang.spring.beans.autowire.Person" p:name="Rome" p:age="22" p:address-ref="address"
+			p:car-ref="car"></bean>
+	<!-- Autowrie 常用的有俩种匹配方式
+		：Byame 根据Bean名字和当前Bean的setter的属性名进行自动装配.
+		：ByType 根据Bean的类型和当前Bean的属性的类型进行自动匹配 若IOC容器中有1个以上的类型匹配 则报错
+		不灵活 俩个只能用一个 不能同时存在 
+		***平时用的比较少 整合框架会用到***
+	 -->
+	<bean id="person2" class="com.liang.spring.beans.autowire.Person" p:name="Rome" p:age="22" autowire="byType"></bean>
+			
+	
+</beans>

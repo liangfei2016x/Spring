@@ -1,0 +1,66 @@
+ Bean的配置方式：
+ 	通过全类名(反射)
+ 	通过工厂方法(静态工厂方法&实例工厂方法)
+ 	FactoryBean 需要实现Spring提供的接口 FactoryBean<?>
+ 
+ IOC容器  BeanFactory & ApplicationContext(常用)
+ 
+ 依赖注入的方式：属性注入和构造器注入
+ 
+ 自动装配
+Autowrie xml里面的自动装配
+ 	常用的有俩种匹配方式
+	：Byame 根据Bean名字和当前Bean的setter的属性名进行自动装配.
+	：ByType 根据Bean的类型和当前Bean的属性的类型进行自动匹配 若IOC容器中有1个以上的类型匹配 则报错
+	不灵活 俩个只能用一个 不能同时存在 
+	***平时用的比较少 整合框架会用到***
+Bean之间的关系  
+如果 Bean 设置 abstract="true" 只能继承不能实例化 抽象Bean 不指定Class属性
+继承:使用  parent 属性 
+依赖:使用depends-on 属性
+
+Bean的作用域  scope 配置作用域
+默认是singleton 单例 容器初始化Bean时就创建一个对象
+prototype: 每次都新建一个 每次调用的时候才创建 容器初始化Bean时不创建
+requst session 用的比较少
+
+配置数据源 
+<context:property-placeholder location="classpath:fileName"/>
+通过${var}来获取值
+
+Spring表达式语言：SpEL applicationContext4.xml
+SpEL为Bean属性进行动态赋值提供了便利
+
+引用其他对象
+引用其他对象的属性
+调用其他对象的方法,还可以链式操作
+叼你够用静态的方法或静态属性 通过T() 他将返回一个Class Object
+支持运算符号
++ - * % == <  <=  >  >= if-else 正则 等等
+
+SpringIOC 容器可以管理Bean的生命周期
+通过构造方法 创建Bean实例
+为Bean的属性设置值和对其他Bean的引用
+调用Bean的初始化方法 init-method 
+使用Bean
+当容器关闭时 调用 Bean的销毁方法 destory-method
+
+BeanPostProcessor(接口)
+	1.postProcessorBeforInitialization(方法) Bean前置处理器 
+	2.postProcessorAfterInitialization(方法) Bean后置处理器
+主要来对Bean前后进行处理 例如过滤
+
+注解方式 配置Bean 
+@Commponent 基本注解,标示了一个受Spring管理的组件
+@Respository 标示持久层组件
+@Service 标识业务层组件
+@Controller 标识控制层组件
+
+<context:component-scan base-package="url" resource-pattern=""></context:component-scan>
+base-package 表示 url 当前包路径及子包都将被注册到Bean中
+resource-pattern 指定扫描的包
+
+属性构造的注解 
+@Autowired:构造器 普通字段 一切具有参数的方法都应用 数组 集合 Map(好强大啊,我的哥)
+@Qualifier:一个接口多个实现(指定名字)
+@Resource和Autowired差不多

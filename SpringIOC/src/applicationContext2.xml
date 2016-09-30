@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:aop="http://www.springframework.org/schema/aop"
+             xmlns:tx="http://www.springframework.org/schema/tx"
+             xmlns:util="http://www.springframework.org/schema/util"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx.xsd
+                     http://www.springframework.org/schema/util
+                     http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- 通过构造器的方法配置Bean -->
+	<!-- 可以通过 index type name 为相应的构造参数赋值 用来区别不同构造器-->
+	<bean id="car" class="com.liang.spring.beans.collections.Car">
+		<constructor-arg value="Audi" index="0"></constructor-arg>
+		<constructor-arg value="shanghai" index="1"></constructor-arg>
+		<constructor-arg value="300000" type="double"></constructor-arg>
+	</bean>
+	
+	<bean id="car2" class="com.liang.spring.beans.collections.Car">
+		<constructor-arg value="BM" index="0"></constructor-arg>
+		<constructor-arg value="shanghai" index="1"></constructor-arg>
+		<constructor-arg value="300000" type="double"></constructor-arg>
+	</bean>
+	
+	<!-- 普通引用 -->
+	<bean id="person" class="com.liang.spring.beans.collections.Person">
+		<property name="name" value="Pater"></property>
+		<property name="age" value="25"></property>
+		<!-- ref 建立bean之间的引用关系 -->
+		<!-- 为集合属性赋值  -->
+		<property name="cars">
+			<list>
+				<ref bean="car"/>
+				<ref bean="car2"/>
+				<!-- 内部bean 直接赋值 -->
+			<bean class="com.liang.spring.beans.collections.Car">
+				<constructor-arg value="liang"></constructor-arg>
+				<!-- null值的使用 -->
+				<constructor-arg><null/></constructor-arg>
+				<constructor-arg value="33333"></constructor-arg>
+			</bean>
+			</list>
+		</property>
+	</bean>
+	<!-- Map --> 
+	<bean id="person2" class="com.liang.spring.beans.collections.Person2">
+		<property name="name" value="Rose"></property>
+		<property name="age" value="24"></property>
+		<property name="cars">
+			<!-- 使用map 的 Entry -->
+			<map>
+				<entry key="AA" value-ref="car"></entry>
+				<entry key="BB" value-ref="car2"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- util 配置单独的集合 以供其他bean使用  需要导入util命名空间-->
+	<util:list id="cars">
+		<ref bean="car"/>
+		<ref bean="car2"/>
+	</util:list>
+	<bean id="person3" class="com.liang.spring.beans.collections.Person">
+		<property name="name" value="Rose"></property>
+		<property name="age" value="24"></property>
+		<property name="cars" ref="cars"></property>
+	</bean>
+</beans>
+<!--P命名空间 了解下  -->
+
+
+

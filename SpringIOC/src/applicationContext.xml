@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:aop="http://www.springframework.org/schema/aop"
+             xmlns:tx="http://www.springframework.org/schema/tx"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!--
+	 	配置bean 
+	 class:bean的全类名。通过反射在IOC容器中创建bean,所有bean必须要有无参的构造方法
+	-->
+	<bean id="helloWorld" class="com.liang.spring.beans.HelloWorld">
+		<!-- name 对应 setName value 为其赋值-->
+		<property name="name" value="Spring"></property>
+	</bean>
+	<!-- 通过构造器的方法配置Bean -->
+	<!-- 可以通过 index type name 为相应的构造参数赋值 用来区别不同构造器-->
+	<bean id="car" class="com.liang.spring.beans.Car">
+		<constructor-arg value="Audi" index="0"></constructor-arg>
+		<constructor-arg value="shanghai" index="1"></constructor-arg>
+		<constructor-arg value="300000" type="double"></constructor-arg>
+	</bean>
+	
+	<bean id="car2" class="com.liang.spring.beans.Car">
+		<constructor-arg value="Audi" name="brand"></constructor-arg>
+		<constructor-arg type="java.lang.String">
+			<!-- 如果字面值包含特殊字符可以用<![CDATA[value]]包括起来 -->
+			<value><![CDATA[<shanghai>]]></value>
+		</constructor-arg>
+		<constructor-arg value="11111" name="maxSpeed" ></constructor-arg>
+	</bean>
+	<!-- 普通引用 -->
+	<bean id="person" class="com.liang.spring.beans.Person">
+		<property name="name" value="liang"></property>
+		<property name="age" value="25"></property>
+		<!-- ref 建立bean之间的引用关系 -->
+		<property name="car" ref="car2"></property>
+		<!-- 建立级联属性赋值 -->
+		<property name="car.price" value="19999"></property>
+	</bean>
+	<!--内部bean  -->
+	<bean id="person2" class="com.liang.spring.beans.Person">
+		<property name="name" value="liang"></property>
+		<property name="age" value="25"></property>
+		
+		<property name="car">
+			<!-- 内部bean -->
+			<bean class="com.liang.spring.beans.Car">
+				<constructor-arg value="liang"></constructor-arg>
+				<!-- null值的使用 -->
+				<constructor-arg><null/></constructor-arg>
+				<constructor-arg value="33333"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+</beans>
